@@ -1,5 +1,6 @@
 # MeX-URL-shortener
 Basic URL shortener web app for Google App Engine - python.
+- see demo @ http://mexu.ml
 * Project file structure :
   - lib folder conatin project apps (user app, short_url app)
   - each app folder composed of :
@@ -15,7 +16,7 @@ Basic URL shortener web app for Google App Engine - python.
   - locale folders contains translation files :
     - you can produce translation files by babel.
 
-* TODO : 
+* TODO :
   - Copmlete endpoints Api. ('/lib/short_url/api_req_handlers.py')
   - build front-end for user area.
 
@@ -30,4 +31,3 @@ Basic URL shortener web app for Google App Engine - python.
   - create google cloud application.
   - edit app.yaml file with your created project id.
   - deply online with this command : "appcfg.py update app.yaml"
-
