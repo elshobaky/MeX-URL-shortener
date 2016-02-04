@@ -1,0 +1,44 @@
+application: melshox-url-shortener
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+#robots.txt file
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+  mime_type: text
+#style folders
+- url: /style/css
+  static_dir: style/css
+  mime_type: text/css
+
+- url: /style/images
+  static_dir: style/images
+  mime_type: image/png
+
+- url: /style/img
+  static_dir: style/img
+  mime_type: image/png
+
+- url: /style/js
+  static_dir: style/js
+  mime_type: text/javascript
+
+- url: /style/fonts
+  static_dir: style/fonts
+  mime_type: fonts
+
+#url mapping file
+
+- url: .*
+  script: urls.app
+#libraries
+libraries:
+- name: webapp2
+  version: "2.5.2"
+
+- name: jinja2
+  version: latest
