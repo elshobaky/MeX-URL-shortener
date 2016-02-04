@@ -25,7 +25,7 @@ Basic URL shortener web app for Google App Engine - python.
   - download Google App Engine Python Launcher and install it.
   - extract the project zip file.
   - cd to project folder.
-  - use comand : "devappserver.py app.yaml".
+  - use comand : "dev_appserver.py app.yaml".
 
 * How to deploy online :
   - create google cloud application.
