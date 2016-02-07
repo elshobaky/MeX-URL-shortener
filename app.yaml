@@ -31,10 +31,18 @@ handlers:
   static_dir: style/fonts
   mime_type: fonts
 
-#url mapping file
 
+# This handler routes requests to your APIs to your Endpoints code.
+# See https://developers.google.com/appengine/docs/python/endpoints/
+#- url: /_ah/spi/.*
+#  script: api.APPLICATION
+
+#url mapping file
 - url: .*
   script: urls.app
+
+
+
 #libraries
 libraries:
 - name: webapp2
@@ -42,3 +50,6 @@ libraries:
 
 - name: jinja2
   version: latest
+
+- name: endpoints
+  version: 1.0
