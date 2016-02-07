@@ -149,11 +149,21 @@ button[disabled] {
 
 .hidden {
   display: none;
+  border: 0px solid;
 }
-#add-details, #short-again, .result-content {
+.short-options, #short-again, .result-content {
   display: inline-block;
   width: 100%;
 }
+.short-options li {
+  display: inline;
+  padding: 0px 15px 0px 15px;
+  border-left: 1px solid grey;
+}
+.short-options>li:first-child {
+  border-left: 0px solid;
+}
+
 .copied {
   color: #1DB941;
 }
