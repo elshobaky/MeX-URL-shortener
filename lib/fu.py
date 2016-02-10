@@ -60,7 +60,7 @@ def gql_json_parser(query_obj):
     if type(query_obj) is list:
         res = [k.make_dict() for k in query_obj]
     else:
-        res = query_obj.to_dict()
+        res = query_obj.make_dict()
     return json.dumps(res,default=date_handler)
 
 def class_json_parser(class_object):

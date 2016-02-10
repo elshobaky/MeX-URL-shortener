@@ -1,10 +1,16 @@
 /* JS File For MelshoX URL Shortener project
  * By : Mahmoud Elshobaky (Mahmoud.elshobaky@gmail.com)
  */
+
+
 function init() {
 	enableButtons ();
 	// init clipboard.js
-	copyResultToClipboard();
+	copyToClipboard();
+	// root path
+	rootPath = "http://" + window.location.host + "/";
+	// main index page content
+	main_content = document.getElementById("main-content").innerHTML;
 }
 
 
@@ -26,6 +32,13 @@ function enableButtons () {
 	$("#multi-short").click(multiShort);
 	// Set action for single short anchor
 	$("#single-short").click(singleShort);
+	// Set action for get user url anchor
+	$("#get-user-urls").click(getUserUrls);
+	// Set action for load home anchor
+	$("#load-home").click(function(){
+		$("#main-content").html(main_content);
+		init();
+	});
 
 	//$("#copy-btn").click(copyResultToClipboard());
 
@@ -33,7 +46,7 @@ function enableButtons () {
 	btn.value="Shorten URL";
 }
 
-
+// short url form handler
 function shortURL () {
 	// Get the requested fields
 	if (document.getElementById("multi_url_field")) {
@@ -63,7 +76,6 @@ function shortURL () {
 			}
 			else if (data.multi_short) {
 				var res = '';
-				var rootPath = "http://" + window.location.host + "/";
 				for (u in data.urls) {
 					if (data.urls[u][0] === 'error') {
 						res += data.urls[u][1];
@@ -80,7 +92,6 @@ function shortURL () {
 				$('#result').removeClass('hidden');
 			}
 			else {
-				var rootPath = "http://" + window.location.host + "/";
 				$('#short-result').attr('value' , rootPath + data.short);
 				$('#short-form').addClass('hidden');
 				$('#result').removeClass('hidden');
@@ -102,7 +113,7 @@ function singleShort() {
 	$("#multi_url_field").replaceWith(single_input);
 }
 
-function copyResultToClipboard() {
+function copyToClipboard() {
 	'use strict';
 	// click events
 	document.body.addEventListener('click', copy, true);
@@ -122,13 +133,74 @@ function copyResultToClipboard() {
 				document.execCommand('copy');
 				inp.blur();
 				// copied animation
-				$("#copy-btn-in").addClass('copied')
-				$("#copy-btn-in").html('Copied ▲');
-				setTimeout(function() { $("#copy-btn-in").html("Copy");$("#copy-btn-in").removeClass('copied'); }, 1500);
+				$(t).addClass('copied');
+				$(t).html('Copied ▲');
+				$(t).attr('value','Copied ▲');
+				setTimeout(function() {
+					$(t).html("Copy");$(t).attr('value','Copy')
+					$(t).removeClass('copied');
+				}, 1500);
 			}
 			catch (err) {
 				alert('please press Ctrl/Cmd+C to copy');
 			}
 		}
 		}
+}
+
+// get users urls
+function getUserUrls(){
+	var s = 0;
+	var n = 10;
+	var fields = {'s':s,'n':n};
+	$.ajax({
+		type     : 'GET',
+		url      : '/url/by-user',
+		data     : fields,
+		dataType : 'json',
+		encode   : true,
+		success  : function(data){
+			if (data.error){
+				window.location = "/user/login";
+			}
+			else if (data.no_urls) {
+				txt = '<p style="text-align:center;color:red;">No Stored URLs</p>';
+				$("#main-content").html(txt)
+			}
+			else {
+				//console.log(data);
+				var url_table = makeUrlTable(data);
+
+				$("#main-content").html(url_table);
+				copyToClipboard();
+			}
+		}
+	});
+}
+
+function makeUrlTable(urls){
+	table = '<table id="personDataTable"><tr>'
+	        +'<th>URL</th>'
+	        +'<th>Shotened URL</th>'
+	        +'</tr>%rows%</table>'
+	base_row = '<tr><td>%url%</td><td>%short%</td><tr>'
+	rows = ''
+	for (u in urls){
+		cp = '<input type="button" class="user_url_copy"'
+		     +' data-copytarget="#user_url_%u%"'
+				 +' style="display:inline;" value="Copy">';
+		cp = cp.replace('%u%', u);
+		short = rootPath + urls[u]['short'];
+		short_html = '<input'
+								 +' id="user_url_'+u+'"'
+								 +' value="'+short+'">'
+								 +'   '+cp;
+		var row = base_row;
+		row = row.replace('%url%',urls[u]['url']);
+		row = row.replace('%short%',short_html);
+		//console.log(row);
+		rows += row
+	}
+	table = table.replace('%rows%',rows);
+	return table;
 }

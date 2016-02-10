@@ -46,3 +46,7 @@ class Url(BaseNDB):
             u.user_id = user_id
         u.put()
         return u
+
+    @classmethod
+    def by_user(cls,user_id,s=0,n=10):
+        return cls.query().filter(cls.user_id==user_id).order(-cls.created).fetch(n,offset=s)

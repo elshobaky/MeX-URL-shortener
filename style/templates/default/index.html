@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>MelshoX URL Shortener</title>
+    <title>MeX URL Shortener</title>
     <!-- css file -->
     <link rel="stylesheet" href="/style/css/melshox.css">
     <!-- js files -->
@@ -12,50 +12,73 @@
 
   <body>
     <main>
-      <div id="main-title">MelshoX URL Shortener</div>
-      <div id="short-form">
-        <form class="url-short-form" method="GET" action="/url/short">
-          <div class="input-group" id="url-input">
-            <div class="input-group-addon">
-               <i class="icon_url"></i>
-            </div>
-            <input id="url_field" name="url" type="url" placeholder="URL ex: http://example.com">
-          </div>
-          <div class="submit" id="url-submit">
-            <input id="url_to_short" type="button" value="please wait">
-          </div>
-          <div class="details">
-            <ul class="short-options">
-              <li>
-                <a href="#" id="add-details">add details</a>
-              </li>
-              <li>
-                <a href="#" id="multi-short">Short multiple URLs</a>
-              </li>
-              <li>
-                <a href="#" id="single-short">Short single URL</a>
-              </li>
+      <header>
+        <nav>
+          <ul id="main-nav">
+            <li><a href="#" id="load-home">Home</a></li>
+            {% if user %}
+            <li><a href="#" id="get-user-urls">My URLs</a></li>
+            {%endif%}
           </ul>
+          <ul id="login-area">
+            {% if user %}
+            <li><a href="/user/logout">Logout</a></li>
+            {% else %}
+            <li><a href="/user/login">Signup/Login</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+        <div id="main-title">MeX URL Shortener</div>
+      </header>
+      <section id="main-content">
+        <div id="short-form">
+          <form class="url-short-form" method="GET" action="/url/short">
+            <div class="input-group" id="url-input">
+              <div class="input-group-addon">
+                 <i class="icon_url"></i>
+              </div>
+              <input id="url_field" name="url" type="url" placeholder="URL ex: http://example.com">
+            </div>
+            <div class="submit" id="url-submit">
+              <input id="url_to_short" type="button" value="please wait">
+            </div>
+            <div class="details">
+              <ul class="short-options">
+                <li>
+                  <a href="#" id="add-details">add details</a>
+                </li>
+                <li>
+                  <a href="#" id="multi-short">Short multiple URLs</a>
+                </li>
+                <li>
+                  <a href="#" id="single-short">Short single URL</a>
+                </li>
+            </ul>
 
-            <div id="url-details" class="hidden">
-              <input id="direct-field" type="checkbox" name="direct">
-              <label for="direct-field">Direct Redirect</label>
-              <input id="title_field" name="title" type="text" placeholder="Title (optional)">
-              <textarea id="description_field" name="description" placeholder="Description (optional)"></textarea>
+              <div id="url-details" class="hidden">
+                <input id="direct-field" type="checkbox" name="direct">
+                <label for="direct-field">Direct Redirect</label>
+                <input id="title_field" name="title" type="text" placeholder="Title (optional)">
+                <textarea id="description_field" name="description" placeholder="Description (optional)"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div id="result" class="hidden">
+          <div class="result-content">
+            <input id="short-result">
+            <div id="copy-btn">
+              <button id="copy-btn-in" data-copytarget="#short-result">Copy</button>
             </div>
           </div>
-        </form>
-      </div>
-      <div id="result" class="hidden">
-        <div class="result-content">
-          <input id="short-result">
-          <div id="copy-btn">
-            <button id="copy-btn-in" data-copytarget="#short-result">Copy</button>
-          </div>
+          <a href="#" id="short-again">Short another URL</a>
         </div>
-        <a href="#" id="short-again">Short another URL</a>
-      </div>
-
+      </section>
+      <footer>
+        <div id="copyright">
+          By: <a href="//mahmoud.elshobaky.com" target="_blank">MelshoX</a>
+        </div>
+      </footer>
     </main>
 
     <script>

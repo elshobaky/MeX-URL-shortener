@@ -19,6 +19,7 @@ _u = URLS_PREFIX + '/url' # you can add prefix for app ex. -u = URLS_PREFIX + '/
 urls = [
    webapp2.Route(_u+'/short', ShortUrl, 'short-url'),
    ('/([a-zA-Z0-9]+)', GetUrl),
+   webapp2.Route(_u+'/by-user', UserUrl, 'user-urls'),
 ]
 
 # rendring urls
